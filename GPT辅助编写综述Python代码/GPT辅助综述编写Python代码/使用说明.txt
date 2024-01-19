@@ -1,0 +1,9 @@
+1、将自己在官网上申请的token输入sk_token.txt文件中
+2、将目标网页的cURL复制到cURL.txt中
+3、运行get_crawl.py获得crawl.py文件
+4、运行crawl.py文件即可获得爬取的数据。对结果进行爬取后即可获得文献信息
+5、如果不想自己处理数据，可以使用我们预先准备好的crawl_code.py代码获取文献摘要数据
+6、运行get_valuable_article.py文件可以筛选有价值的文献。如果想修改筛选的规则可以自行修改。
+（可以使用数据皮皮侠官网的GPT辅助修改http://www.ppmandata.cn/chatgpt）
+7、运行ChatGPT_outline.py获得综述大纲
+8、运行ChatGPT_review.py获得综述
