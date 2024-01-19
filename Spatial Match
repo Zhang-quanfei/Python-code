@@ -1,1 +1,47 @@
+# -*- coding: utf-8 -*-
+# python调用Arcgis
+import arcpy
+import os
+
+#------------------- 导入csv数据转换为坐标-----------------------#
+# 设置工作空间（workspace）
+arcpy.env.workspace = r"D:\Stata14\examples\地级市宏观数据\0942 【高级会员】金融机构数据库2007-2022（已更新）"
+
+# 输入CSV文件路径
+csv_file = "上市公司经纬度.csv"
+
+# 输出点要素类（feature class）路径
+output_feature_class = r"F:\Users\zhang\Desktop\Points.shp"
+
+# 经度和纬度字段的名称
+longitude_field = "lng"
+latitude_field = "lat"
+
+# 使用MakeXYEventLayer工具创建点图层
+arcpy.management.MakeXYEventLayer(csv_file, longitude_field, latitude_field, "PointLayer", arcpy.SpatialReference(4326))
+
+# 使用CopyFeatures工具将点图层转换为点要素类
+arcpy.management.CopyFeatures("PointLayer", output_feature_class)
+
+print("导入完成。")
+
+
+
+# 设置工作空间"
+arcpy.env.workspace = r"F:\Users\zhang\Desktop"  # 修改为您的工作空间路径
+arcpy.env.overwriteOutput = True
+
+firm = r"F:\Users\zhang\Desktop\firm.shp"
+bank = r"F:\Users\zhang\Desktop\bank.shp"
+# 为每个企业创建500米Buffer
+schools_buffer = arcpy.analysis.Buffer(firm, 'FirmsBuffer', '500 Meters')
+
+# 寻找每个Buffer区域内的银行点
+houses_near_schools = arcpy.analysis.SpatialJoin(house, schools_buffer, 'BanksNearFirms', join_type='KEEP_COMMON', match_option='WITHIN')
+
+# 输出结果
+output_dataset = 'BanksNearFirmsDataset'
+arcpy.management.CopyFeatures(houses_near_schools, output_dataset)
+
+print("处理完成。结果已保存为：" + output_dataset)
 
